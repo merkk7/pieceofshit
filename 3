@@ -1,0 +1,97 @@
+
+from distutils import command
+from email.mime import image
+import tkinter as tk
+from tkinter.ttk import Label
+
+class SampleApp(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self._frame = None
+        self.switch_frame(StartPage)
+
+    def switch_frame(self, frame_class):
+        """Destroys current frame and replaces it with a new one."""
+        new_frame = frame_class(self)
+        if self._frame is not None:
+            self._frame.destroy()
+        self._frame = new_frame
+        self.geometry('500x500')
+        self._frame.pack()
+
+class StartPage(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+
+        start_label = tk.Label(self, text="Здравствуйте!")
+        page_1_button = tk.Button(self, text="Войти",
+                                  command=lambda: master.switch_frame(PageOne))
+        start_label.pack()
+        page_1_button.pack()
+        
+#Выбор тренажера
+class PageOne(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+
+        page_1_label = tk.Label(self, text="Выберите тренажер:")
+        start_button = tk.Button(self, text="Справочник",
+                                 command=lambda: master.switch_frame(PageTwo))
+        entoru= tk.Button(self, text='Перевод слов')
+        page_1_label.pack(side="top", fill="x", pady=10)
+        start_button.pack()
+        entoru.pack()
+
+#Справочник
+class PageTwo(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        page_2_label = tk.Label(self, text="Present simple")
+
+        img = tk.PhotoImage(file='project\img\Presents.png') # фотография ! РЕШИТЬ
+        Label(self, image=img).pack()
+
+        start_button = tk.Button(self, text="Далее",
+                                 command=lambda: master.switch_frame(PageThree))
+        back_button = tk.Button(self, text='Обратно в меню',
+                                 command=lambda: master.switch_frame(PageOne))               
+        page_2_label.pack(side="top", fill="x", pady=10)
+        start_button.pack()
+        back_button.pack()
+
+# Справочник
+class PageThree(tk.Frame):
+    def __init__(self,master):
+        tk.Frame.__init__(self, master)
+
+        page_3_label = tk.Label(self, text="Present Continuous")
+        start_button = tk.Button(self, text="Далее",
+                                 command=lambda: master.switch_frame(PageFour))
+        back_button = tk.Button(self, text='Назад',
+                                 command=lambda: master.switch_frame(PageTwo))
+        menu_button = tk.Button(self,text='Вернуться в меню',
+                                command=lambda: master.switch_frame(PageOne))
+        page_3_label.pack(side="top", fill="x", pady=10)
+        start_button.pack()
+        back_button.pack()
+        menu_button.pack()       
+# Справочник 
+class PageFour(tk.Frame):
+    def __init__(self,master):
+        tk.Frame.__init__(self, master) 
+
+        page_4_label = tk.Label(self, text="Present Perfect Continuous")
+        start_button = tk.Button(self, text="Далее",
+                                 command=lambda: master.switch_frame())
+        back_button = tk.Button(self, text='Назад',
+                                 command=lambda: master.switch_frame(PageThree))
+        menu_button = tk.Button(self,text='Вернуться в меню',
+                                command=lambda: master.switch_frame(PageOne))
+        page_4_label.pack(side="top", fill="x", pady=10)
+        start_button.pack()
+        back_button.pack()
+        menu_button.pack()              
+
+if __name__ == "__main__":
+    app = SampleApp()
+    app.mainloop()
